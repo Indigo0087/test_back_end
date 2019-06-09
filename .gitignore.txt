@@ -1,0 +1,13 @@
+.gradle/
+.idea/
+build/
+gradle/
+gradle
+gradlew
+gradlew
+store.data
+store.26.log
+store.index
+store.lock
+store.trace
+gradle/wrapper
