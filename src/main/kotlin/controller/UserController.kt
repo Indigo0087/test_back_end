@@ -1,7 +1,7 @@
 package controller
 
-import DAO.DefaultDaoImpl
 import DAO.Factory
+import DAO.UserDaoImpl
 import io.javalin.Context
 import model.User
 import org.slf4j.LoggerFactory
@@ -10,7 +10,7 @@ import java.sql.SQLException
 
 object UserController {
 
-    lateinit var dao : DefaultDaoImpl<User>
+    lateinit var dao : UserDaoImpl<User>
     val logger = LoggerFactory.getLogger(this::class.java)
 
     init {
@@ -56,7 +56,7 @@ object UserController {
         val userId = resourceId.toLong()
         logger.debug(resourceId)
         try {
-            val user = dao.getById(userId, User::class.java)
+            val user = dao.getById(userId)
             ctx.json(user)
         } catch (e : SQLException){
             logger.error("Err getting one")

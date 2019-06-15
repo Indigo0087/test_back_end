@@ -2,11 +2,11 @@ package DAO
 
 open class Factory<T> {
 
-    private var defaultDAO: DefaultDaoImpl<T>? = null
+    private var defaultDAO: UserDaoImpl<T>? = null
 
-    fun getUserDAO(): DefaultDaoImpl<T> {
+    fun getUserDAO(): UserDaoImpl<T> {
         if (defaultDAO == null) {
-            defaultDAO = DefaultDaoImpl()
+            defaultDAO = UserDaoImpl()
         }
         return defaultDAO!!
     }

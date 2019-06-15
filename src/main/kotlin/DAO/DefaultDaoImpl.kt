@@ -1,22 +1,23 @@
 package DAO
 
+import model.User
 import org.hibernate.Session
-import utils.HibernateUtils.buildSession
+import utils.HibernateUtils.sessionFactory
 
-class DefaultDaoImpl<T>{// : DefaultDao {
+class UserDaoImpl<User>{
 
-    private var session: Session = buildSession<Any>().openSession()
+    private var session: Session = sessionFactory.openSession()
 
-    fun create(o: Any) {
-        session = buildSession<Any>().openSession()
+    fun create(o: User) {
+        session = sessionFactory.openSession()
         session.beginTransaction()
         session.save(o)
         session.transaction.commit()
         session.close()
     }
 
-    fun update(o: Any) {
-        session = buildSession<Any>().openSession()
+    fun update(o: User) {
+        session = sessionFactory.openSession()
         session.beginTransaction()
         session.update(o)
         session.transaction.commit()
@@ -24,36 +25,36 @@ class DefaultDaoImpl<T>{// : DefaultDao {
     }
 
     fun delete(id: Long) {
-        session = buildSession<Any>().openSession()
+        session = sessionFactory.openSession()
         session.beginTransaction()
-        session.delete(session.load(Any::class.java, id))
+        session.delete(session.load("User", id))
         session.transaction.commit()
         session.close()
     }
 
-    fun getAll(hql : String): List<Any> {
-        session = buildSession<Any>().openSession()
-        val list = session.createQuery(hql).list() as List<Any>
+    fun getAll(hql : String): List<User> {
+        session = sessionFactory.openSession()
+        val list = session.createQuery(hql).list() as List<User>
         session.close()
         return list
     }
 
-    fun getById(id: Long, clazz:Class<T>): T {
-        session = buildSession<Any>().openSession()
+    fun getById(id: Long): User {
+        session = sessionFactory.openSession()
         session.beginTransaction()
-        val o = session.load(clazz.simpleName, id)
+        val o = session.load("User", id) as User
         session.transaction.commit()
         session.close()
-        return o as T
+        return o
     }
 
-    fun getByLogin(login: String, clazz:Class<T>): T {
-        session = buildSession<Any>().openSession()
+    fun getByLogin(login: String, clazz:Class<User>): User {
+        session = sessionFactory.openSession()
         session.beginTransaction()
-        val hql = "select a from ${clazz.simpleName} a where login='$login'"
-        val o= session.createQuery(hql).list().first()
+        val hql = "select a from User a where login='$login'"
+        val o= session.createQuery(hql).list().first() as User
         session.transaction.commit()
         session.close()
-        return o as T
+        return o
     }
 }

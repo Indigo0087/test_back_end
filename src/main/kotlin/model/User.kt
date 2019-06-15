@@ -4,7 +4,6 @@ import javax.persistence.*
 
 @Entity
 data class User(@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-                @Column(name = "id")
                 var id : Long? = null,
                 @Column(name = "login")
                 var login : String? = null,
